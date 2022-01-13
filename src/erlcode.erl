@@ -21,24 +21,24 @@
 %% API
 %% ==================================================================
 
--spec golay_extended_encode(Data :: pos_integer()) -> pos_integer().
+-spec golay_extended_encode(Data :: pos_integer()) -> {ok, Encoded :: pos_integer()}.
 golay_extended_encode(Data) when Data < ?MAX_12_BIT_INT ->
     not_loaded(?LINE).
--spec golay_extended_decode(Data :: pos_integer()) -> pos_integer().
+-spec golay_extended_decode(Data :: pos_integer()) -> {ok, {Decoded :: pos_integer(), Corrupted :: non_neg_integer()}} | {error, unrecoverable}.
 golay_extended_decode(Data) when Data < ?MAX_24_BIT_INT ->
     not_loaded(?LINE).
 
--spec golay_standard_encode(Data :: pos_integer()) -> pos_integer().
+-spec golay_standard_encode(Data :: pos_integer()) -> {ok, Encoded :: pos_integer()}.
 golay_standard_encode(Data) when Data < ?MAX_12_BIT_INT ->
     not_loaded(?LINE).
--spec golay_standard_decode(Data :: pos_integer()) -> pos_integer().
+-spec golay_standard_decode(Data :: pos_integer()) -> {ok, {Decoded :: pos_integer(), Corrupted :: non_neg_integer()}} | {error, unrecoverable}.
 golay_standard_decode(Data) when Data < ?MAX_23_BIT_INT ->
     not_loaded(?LINE).
 
--spec golay_shortened_encode(Data :: pos_integer()) -> pos_integer().
+-spec golay_shortened_encode(Data :: pos_integer()) -> {ok, Encoded :: pos_integer()}.
 golay_shortened_encode(Data) when Data < ?MAX_6_BIT_INT ->
     not_loaded(?LINE).
--spec golay_shortened_decode(Data :: pos_integer()) -> pos_integer().
+-spec golay_shortened_decode(Data :: pos_integer()) -> {ok, {Decoded :: pos_integer(), Corrupted :: non_neg_integer()}} | {error, unrecoverable}.
 golay_shortened_decode(Data) when Data < ?MAX_18_BIT_INT ->
     not_loaded(?LINE).
 
