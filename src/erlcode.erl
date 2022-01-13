@@ -25,7 +25,7 @@
 golay_extended_encode(Data) when Data < ?MAX_12_BIT_INT ->
     not_loaded(?LINE).
 -spec golay_extended_decode(Data :: pos_integer()) -> pos_integer().
-golay_extended_decode(Data) when Data < ?MAX_23_BIT_INT ->
+golay_extended_decode(Data) when Data < ?MAX_24_BIT_INT ->
     not_loaded(?LINE).
 
 -spec golay_standard_encode(Data :: pos_integer()) -> pos_integer().
