@@ -48,6 +48,20 @@ pub fn golay_shortened_decode<'a>(env: Env<'a>, data: u32) -> NifResult<Term<'a>
     }
 }
 
+#[rustler::nif(name = "bch_encode")]
+pub fn bch_encode<'a>(env: Env<'a>, data: u16) -> NifResult<Term<'a>> {
+    let e = code_rs::coding::bch::encode(data);
+    Ok((ok(), e).encode(env))
+}
+
+#[rustler::nif(name = "bch_decode")]
+pub fn bch_decode<'a>(env: Env<'a>, data: u64) -> NifResult<Term<'a>> {
+    match code_rs::coding::bch::decode(data) {
+        Some((data, err)) => Ok((ok(), (data, err)).encode(env)),
+        None => Ok((error(), unrecoverable()).encode(env)),
+    }
+}
+
 fn load(_env: Env, _: Term) -> bool {
     true
 }
@@ -60,7 +74,9 @@ rustler::init!(
         golay_standard_encode,
         golay_standard_decode,
         golay_shortened_encode,
-        golay_shortened_decode
+        golay_shortened_decode,
+        bch_encode,
+        bch_decode
     ],
     load = load
 );

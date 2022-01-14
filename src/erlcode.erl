@@ -3,12 +3,10 @@
 %% API
 -export(
    [
-    golay_extended_encode/1,
-    golay_extended_decode/1,
-    golay_standard_encode/1,
-    golay_standard_decode/1,
-    golay_shortened_encode/1,
-    golay_shortened_decode/1
+    golay_extended_encode/1, golay_extended_decode/1,
+    golay_standard_encode/1, golay_standard_decode/1,
+    golay_shortened_encode/1, golay_shortened_decode/1,
+    bch_encode/1, bch_decode/1
    ]).
 
 %% Native lib support
@@ -40,6 +38,13 @@ golay_shortened_encode(Data) when Data < ?MAX_6_BIT_INT ->
     not_loaded(?LINE).
 -spec golay_shortened_decode(Data :: pos_integer()) -> {ok, {Decoded :: pos_integer(), Corrupted :: non_neg_integer()}} | {error, unrecoverable}.
 golay_shortened_decode(Data) when Data < ?MAX_18_BIT_INT ->
+    not_loaded(?LINE).
+
+-spec bch_encode(Data :: pos_integer()) -> {ok, Encoded :: pos_integer()}.
+bch_encode(Data) when Data < ?MAX_16_BIT_INT ->
+    not_loaded(?LINE).
+-spec bch_decode(Data :: pos_integer()) -> {ok, {Decoded :: pos_integer(), Corrupted :: non_neg_integer()}} | {error, unrecoverable}.
+bch_decode(Data) when Data < ?MAX_64_BIT_INT ->
     not_loaded(?LINE).
 
 %% ==================================================================
