@@ -16,7 +16,7 @@ pub fn golay_extended_encode(data: u16) -> NifResult<(Atom, u32)> {
 pub fn golay_extended_decode(data: u32) -> NifResult<(Atom, (u16, usize))> {
     match cai_golay::extended::decode(data) {
         Some((data, err)) => Ok((ok(), (data, err))),
-        None => Err(Error::Term(Box::new(unrecoverable()))),
+        None => Err(Error::Term(Box::new((unrecoverable(), data)))),
     }
 }
 
@@ -30,7 +30,7 @@ pub fn golay_standard_encode(data: u16) -> NifResult<(Atom, u32)> {
 pub fn golay_standard_decode(data: u32) -> NifResult<(Atom, (u16, usize))> {
     match cai_golay::standard::decode(data) {
         Some((data, err)) => Ok((ok(), (data, err))),
-        None => Err(Error::Term(Box::new(unrecoverable()))),
+        None => Err(Error::Term(Box::new((unrecoverable(), data)))),
     }
 }
 
@@ -44,7 +44,7 @@ pub fn golay_shortened_encode(data: u8) -> NifResult<(Atom, u32)> {
 pub fn golay_shortened_decode(data: u32) -> NifResult<(Atom, (u8, usize))> {
     match code_rs::coding::golay::shortened::decode(data) {
         Some((data, err)) => Ok((ok(), (data, err))),
-        None => Err(Error::Term(Box::new(unrecoverable()))),
+        None => Err(Error::Term(Box::new((unrecoverable(), data)))),
     }
 }
 
@@ -58,7 +58,7 @@ pub fn bch_encode(data: u16) -> NifResult<(Atom, u64)> {
 pub fn bch_decode(data: u64) -> NifResult<(Atom, (u16, usize))> {
     match code_rs::coding::bch::decode(data) {
         Some((data, err)) => Ok((ok(), (data, err))),
-        None => Err(Error::Term(Box::new(unrecoverable()))),
+        None => Err(Error::Term(Box::new((unrecoverable(), data)))),
     }
 }
 
