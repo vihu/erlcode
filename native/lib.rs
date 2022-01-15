@@ -1,4 +1,4 @@
-use rustler::{Encoder, Env, NifResult, Term};
+use rustler::{error::Error, Atom, Env, NifResult, Term};
 
 rustler::atoms! {
     ok,
@@ -7,58 +7,58 @@ rustler::atoms! {
 }
 
 #[rustler::nif(name = "golay_extended_encode")]
-pub fn golay_extended_encode<'a>(env: Env<'a>, data: u16) -> NifResult<Term<'a>> {
+pub fn golay_extended_encode(data: u16) -> NifResult<(Atom, u32)> {
     let e = cai_golay::extended::encode(data);
-    Ok((ok(), e).encode(env))
+    Ok((ok(), e))
 }
 
 #[rustler::nif(name = "golay_extended_decode")]
-pub fn golay_extended_decode<'a>(env: Env<'a>, data: u32) -> NifResult<Term<'a>> {
+pub fn golay_extended_decode(data: u32) -> NifResult<(Atom, (u16, usize))> {
     match cai_golay::extended::decode(data) {
-        Some((data, err)) => Ok((ok(), (data, err)).encode(env)),
-        None => Ok((error(), unrecoverable()).encode(env)),
+        Some((data, err)) => Ok((ok(), (data, err))),
+        None => Err(Error::Term(Box::new(unrecoverable()))),
     }
 }
 
 #[rustler::nif(name = "golay_standard_encode")]
-pub fn golay_standard_encode<'a>(env: Env<'a>, data: u16) -> NifResult<Term<'a>> {
+pub fn golay_standard_encode(data: u16) -> NifResult<(Atom, u32)> {
     let e = cai_golay::standard::encode(data);
-    Ok((ok(), e).encode(env))
+    Ok((ok(), e))
 }
 
 #[rustler::nif(name = "golay_standard_decode")]
-pub fn golay_standard_decode<'a>(env: Env<'a>, data: u32) -> NifResult<Term<'a>> {
+pub fn golay_standard_decode(data: u32) -> NifResult<(Atom, (u16, usize))> {
     match cai_golay::standard::decode(data) {
-        Some((data, err)) => Ok((ok(), (data, err)).encode(env)),
-        None => Ok((error(), unrecoverable()).encode(env)),
+        Some((data, err)) => Ok((ok(), (data, err))),
+        None => Err(Error::Term(Box::new(unrecoverable()))),
     }
 }
 
 #[rustler::nif(name = "golay_shortened_encode")]
-pub fn golay_shortened_encode<'a>(env: Env<'a>, data: u8) -> NifResult<Term<'a>> {
+pub fn golay_shortened_encode(data: u8) -> NifResult<(Atom, u32)> {
     let e = code_rs::coding::golay::shortened::encode(data);
-    Ok((ok(), e).encode(env))
+    Ok((ok(), e))
 }
 
 #[rustler::nif(name = "golay_shortened_decode")]
-pub fn golay_shortened_decode<'a>(env: Env<'a>, data: u32) -> NifResult<Term<'a>> {
+pub fn golay_shortened_decode(data: u32) -> NifResult<(Atom, (u8, usize))> {
     match code_rs::coding::golay::shortened::decode(data) {
-        Some((data, err)) => Ok((ok(), (data, err)).encode(env)),
-        None => Ok((error(), unrecoverable()).encode(env)),
+        Some((data, err)) => Ok((ok(), (data, err))),
+        None => Err(Error::Term(Box::new(unrecoverable()))),
     }
 }
 
 #[rustler::nif(name = "bch_encode")]
-pub fn bch_encode<'a>(env: Env<'a>, data: u16) -> NifResult<Term<'a>> {
+pub fn bch_encode(data: u16) -> NifResult<(Atom, u64)> {
     let e = code_rs::coding::bch::encode(data);
-    Ok((ok(), e).encode(env))
+    Ok((ok(), e))
 }
 
 #[rustler::nif(name = "bch_decode")]
-pub fn bch_decode<'a>(env: Env<'a>, data: u64) -> NifResult<Term<'a>> {
+pub fn bch_decode(data: u64) -> NifResult<(Atom, (u16, usize))> {
     match code_rs::coding::bch::decode(data) {
-        Some((data, err)) => Ok((ok(), (data, err)).encode(env)),
-        None => Ok((error(), unrecoverable()).encode(env)),
+        Some((data, err)) => Ok((ok(), (data, err))),
+        None => Err(Error::Term(Box::new(unrecoverable()))),
     }
 }
 
