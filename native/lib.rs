@@ -62,6 +62,34 @@ pub fn bch_decode(data: u64) -> NifResult<(Atom, (u16, usize))> {
     }
 }
 
+#[rustler::nif(name = "hamming_standard_encode")]
+pub fn hamming_standard_encode(data: u16) -> NifResult<(Atom, u16)> {
+    let e = code_rs::coding::hamming::standard::encode(data);
+    Ok((ok(), e))
+}
+
+#[rustler::nif(name = "hamming_standard_decode")]
+pub fn hamming_standard_decode(data: u16) -> NifResult<(Atom, (u16, usize))> {
+    match code_rs::coding::hamming::standard::decode(data) {
+        Some((data, err)) => Ok((ok(), (data, err))),
+        None => Err(Error::Term(Box::new((unrecoverable(), data)))),
+    }
+}
+
+#[rustler::nif(name = "hamming_shortened_encode")]
+pub fn hamming_shortened_encode(data: u8) -> NifResult<(Atom, u16)> {
+    let e = code_rs::coding::hamming::shortened::encode(data);
+    Ok((ok(), e))
+}
+
+#[rustler::nif(name = "hamming_shortened_decode")]
+pub fn hamming_shortened_decode(data: u16) -> NifResult<(Atom, (u8, usize))> {
+    match code_rs::coding::hamming::shortened::decode(data) {
+        Some((data, err)) => Ok((ok(), (data, err))),
+        None => Err(Error::Term(Box::new((unrecoverable(), data)))),
+    }
+}
+
 fn load(_env: Env, _: Term) -> bool {
     true
 }
@@ -76,7 +104,11 @@ rustler::init!(
         golay_shortened_encode,
         golay_shortened_decode,
         bch_encode,
-        bch_decode
+        bch_decode,
+        hamming_standard_encode,
+        hamming_standard_decode,
+        hamming_shortened_encode,
+        hamming_shortened_decode,
     ],
     load = load
 );

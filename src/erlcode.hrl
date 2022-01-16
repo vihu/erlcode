@@ -1,5 +1,8 @@
 -define(MAX_6_BIT_INT, 64).
+-define(MAX_10_BIT_INT, 1024).
+-define(MAX_11_BIT_INT, 2048).
 -define(MAX_12_BIT_INT, 4096).
+-define(MAX_15_BIT_INT, 32768).
 -define(MAX_16_BIT_INT, 65536).
 -define(MAX_18_BIT_INT, 262144).
 -define(MAX_23_BIT_INT, 8388608).
